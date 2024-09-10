@@ -1,23 +1,30 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import UserVsComputer from './UserVsComputer';
+import UserVsUser from './UserVsUser';
 import './App.css';
 
 function App() {
+  const [gameMode, setGameMode] = useState(null);
+
+  const handleGameModeSelection = (mode) => {
+    setGameMode(mode);
+  };
+
+  const resetGame = () => {
+    setGameMode(null);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1 className='heading'>Rock Paper Scissors</h1>
+      {gameMode === null && (
+        <div className="button-div">
+          <button className="button" onClick={() => handleGameModeSelection('UserVsComputer')}>User vs Computer</button>
+          <button className="button" onClick={() => handleGameModeSelection('UserVsUser')}>User vs User</button>
+        </div>
+      )}
+      {gameMode === 'UserVsComputer' && <UserVsComputer onReset={resetGame} />}
+      {gameMode === 'UserVsUser' && <UserVsUser onReset={resetGame} />}
     </div>
   );
 }
